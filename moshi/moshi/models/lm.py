@@ -976,7 +976,9 @@ class LMGen(StreamingModule[_LMGenState]):
 
     def load_voice_prompt_embeddings(self, path: str):
         self.voice_prompt = path
-        state = torch.load(path)
+        # Voice prompt files may have been saved from a CUDA environment.
+        # Load them on CPU first so CPU-only deployments can use the same files.
+        state = torch.load(path, map_location="cpu", weights_only=True)
 
         self.voice_prompt_audio = None
         self.voice_prompt_embeddings = state["embeddings"].to(self.lm_model.device)

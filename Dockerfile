@@ -1,7 +1,9 @@
-ARG BASE_IMAGE="nvcr.io/nvidia/cuda"
-ARG BASE_IMAGE_TAG="12.4.1-runtime-ubuntu22.04"
+# ARG BASE_IMAGE="nvcr.io/nvidia/cuda"
+# ARG BASE_IMAGE_TAG="12.4.1-runtime-ubuntu22.04"
 
-FROM ${BASE_IMAGE}:${BASE_IMAGE_TAG} AS base
+# FROM ${BASE_IMAGE}:${BASE_IMAGE_TAG} AS base
+
+FROM python:3.12-slim AS base
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
