@@ -375,7 +375,11 @@ def main():
         "--greedy", action="store_true", help="Disable sampling (greedy decoding)"
     )
     parser.add_argument(
-        "--device", type=str, default="cuda", help="Device on which to run, defaults to 'cuda'."
+        "--device",
+        type=str,
+        default=None,
+        choices=("cuda", "cpu"),
+        help="Device on which to run. Defaults to CUDA when available, otherwise CPU.",
     )
     parser.add_argument("--cpu-offload", action="store_true",
                         help="Offload LM model layers to CPU when GPU memory is insufficient. "
@@ -383,6 +387,9 @@ def main():
     parser.add_argument("--seed", type=int, default=-1, help="Seed for reproducibility (-1 disables)")
 
     args = parser.parse_args()
+    args.device = torch.device(
+        args.device if args.device is not None else ("cuda" if torch.cuda.is_available() else "cpu")
+    )
 
     # If --voice-prompt-dir is omitted, voices.tgz is downloaded from HF and extracted.
     voice_prompt_dir = _get_voice_prompt_dir(

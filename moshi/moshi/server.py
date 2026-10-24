@@ -369,7 +369,13 @@ def main():
     parser.add_argument("--hf-repo", type=str, default=loaders.DEFAULT_REPO,
                         help="HF repo to look into, defaults PersonaPlex. "
                              "Use this to select a different pre-trained model.")
-    parser.add_argument("--device", type=str, default="cuda", help="Device on which to run, defaults to 'cuda'.")
+    parser.add_argument(
+        "--device",
+        type=str,
+        default=None,
+        choices=("cuda", "cpu"),
+        help="Device on which to run. Defaults to CUDA when available, otherwise CPU.",
+    )
     parser.add_argument("--cpu-offload", action="store_true",
                         help="Offload LM model layers to CPU when GPU memory is insufficient. "
                              "Requires 'accelerate' package.")

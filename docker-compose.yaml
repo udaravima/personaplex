@@ -9,12 +9,15 @@ services:
       - NO_TORCH_COMPILE=1
     env_file:
       - .env
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [ gpu ]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         # - driver: nvidia
+    #         #   count: 1
+    #         #   capabilities: [ gpu ]
+    #         - driver: cpu
+    #           count: 1
+    #           capabilities: [ cpu ]
     volumes:
       - ./.cache:/root/.cache

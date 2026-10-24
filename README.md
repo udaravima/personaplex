@@ -53,6 +53,11 @@ Launch server for live interaction (temporary SSL certs for https):
 SSL_DIR=$(mktemp -d); python -m moshi.server --ssl "$SSL_DIR"
 ```
 
+**CPU-only:** To run without an NVIDIA GPU, pass `--device cpu`:
+```bash
+SSL_DIR=$(mktemp -d); python -m moshi.server --ssl "$SSL_DIR" --device cpu
+```
+
 **CPU Offload:** If your GPU has insufficient memory, use the `--cpu-offload` flag to offload model layers to CPU. This requires the `accelerate` package (`pip install accelerate`):
 ```bash
 SSL_DIR=$(mktemp -d); python -m moshi.server --ssl "$SSL_DIR" --cpu-offload
@@ -67,7 +72,7 @@ Access the Web UI directly at https://11.54.401.33:8998
 
 For offline evaluation use the offline script that streams in an input wav file and produces an output wav file from the captured output stream. The output file will be the same duration as the input file.
 
-Add `--cpu-offload` to any command below if your GPU has insufficient memory (requires `accelerate` package). Or install cpu-only PyTorch for offline evaluation on pure CPU.
+Add `--device cpu` to run offline evaluation without an NVIDIA GPU. Add `--cpu-offload` instead if your GPU has insufficient memory (requires the `accelerate` package).
 
 **Assistant example:**
 ```bash
